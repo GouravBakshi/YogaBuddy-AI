@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+youtube:
+  api-key: ${Youtube_Api_Key}
+  base-url: ${Youtube_BaseUrl}
+
+
+spring:
+  application:
+    name: yogabuddy-backend
+
+  ai:
+#    openai:
+#      api-key: Your Api key
+#      base-url: base url of open ai
+#      model: gpt-4
+
+    ollama:
+      base-url: ${Ollama_BaseUrl}
+      chat:
+        options:
+          model: ${Ollama_Model}
+
+#    model:
+#      chat: vertexai  # Specifies the use of Vertex AI as the chat model
+#    vertex:
+#      ai:
+#        gemini:
+#          project-id: Your_Project_Id
+#          location: Enter location  # or other like europe-west4, etc.
+#          credentials:
+#            location: ${GOOGLE_APPLICATION_CREDENTIALS}
+#          chat:
+#            options:
+#              model: gemini-2.5-flash  # You can use gemini-1.0-pro if needed
+#              temperature: 0.7
+
+  datasource:
+    url: ${database_url}
+    username: ${database_username}
+    password: ${database_password}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+jwt:
+  secret: ${jwt_secret}
+  #expiration: 86400000  # 1 day in milliseconds
+  expiration: ${jwt_expiration}
+
+refresh:
+  #expiry: 18000000  # 5 hours in milliseconds
+  expiry: ${refresh_expiry}
+
+frontend:
+  url: ${fronted_url}  # your React frontend
+
+#  logging:
+#    level:
+#      org:
+#        springframework:
+#          security: DEBUG
