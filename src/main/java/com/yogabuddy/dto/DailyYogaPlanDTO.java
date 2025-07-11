@@ -21,7 +21,7 @@ public class DailyYogaPlanDTO {
     @AllArgsConstructor
     @Builder
     public static class YogaPoseEntry {
-        private String PoseName;
+        private String poseName;
         private int duration; // in minutes
     }
 }

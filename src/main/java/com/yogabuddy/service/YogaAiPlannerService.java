@@ -43,7 +43,15 @@ public class YogaAiPlannerService {
             assert rawResponse != null;
             String cleanedJson = rawResponse.replaceAll("(?s)^.*?(\\[.*]).*$", "$1");
 
+
+            // Optional: check if the response is quoted JSON (e.g., stringified JSON)
+            if (cleanedJson.startsWith("\"[") && cleanedJson.endsWith("]\"")) {
+                cleanedJson = objectMapper.readValue(cleanedJson, String.class); // unwrap
+            }
+
+
             System.out.println(cleanedJson);
+
             // ✅ Parse response into DTO list
             List<DailyYogaPlanDTO> dailyPlanList = objectMapper.readValue(cleanedJson, new TypeReference<>() {});
 
@@ -95,6 +103,7 @@ Generate a 30-day personalized yoga plan for a user with:
 
 🧘 STRICT FORMAT REQUIREMENTS:
 - Return ONLY a valid JSON array containing EXACTLY 30 objects (days).
+- Do not include anything other than JSON.
 - Each object must include:
   - "dayNumber": (integer from 1 to 30),
   - "title": A unique, creative yoga title for the day (NO numbers, NO word "Day" or "day", NO colons or punctuation at the beginning),
@@ -113,6 +122,115 @@ Generate a 30-day personalized yoga plan for a user with:
 - Choose poses that serve overlapping purposes where possible.
 - Do not overload the plan or exceed the time constraints.
 - Pose names must be real, traditional yoga poses from Sanskrit. Do not invent names.
+- **ONLY use the following yoga pose names from the provided list:**
+    - Tadasana
+    - Uttanasana
+    - Virabhadrasana I
+    - Virabhadrasana II
+    - Utthita Trikonasana
+    - Utthita Parsvakonasana
+    - Ardha Chandrasana
+    - Vrikshasana
+    - Sukhasana
+    - Dandasana
+    - Paschimottanasana
+    - Janu Sirsasana
+    - Baddha Konasana
+    - Gomukhasana
+    - Virasana
+    - Ustrasana
+    - Dhanurasana
+    - Setu Bandhasana
+    - Matsyasana
+    - Halasana
+    - Sarvangasana
+    - Sirsasana
+    - Ardha Matsyendrasana
+    - Supta Matsyendrasana
+    - Balasana
+    - Savasana
+    - Malasana
+    - Utkatasana
+    - Navasana
+    - Phalakasana
+    - Chaturanga Dandasana
+    - Urdhva Mukha Svanasana
+    - Bakasana
+    - Garudasana
+    - Anjaneyasana
+    - Marjaryasana-Bitilasana
+    - Adho Mukha Vrksasana
+    - Parsvottanasana
+    - Upavistha Konasana
+    - Vasisthasana
+    - Viparita Karani
+    - Eka Pada Rajakapotasana
+    - Natarajasana
+    - Chakrasana
+    - Tittibhasana
+    - Salamba Sarvangasana
+    - Supta Baddha Konasana
+    - Kapotasana
+    - Parivrtta Trikonasana
+    - Paripurna Navasana
+    - Chamatkarasana
+    - Parivrtta Parsvakonasana
+    - Parivrtta Ardha Chandrasana
+    - Parsva Bakasana
+    - Akarna Dhanurasana
+    - Supta Padangusthasana
+    - Urdhva Hastasana
+    - Uttana Shishosana
+    - Setu Bandhasana Sarvangasana
+    - Salamba Sirsasana
+    - Ardha Padma Paschimottanasana
+    - Eka Pada Koundinyasana I
+    - Eka Pada Koundinyasana II
+    - Visvamitrasana
+    - Astavakrasana
+    - Titibasana
+    - Salamba Bhujangasana
+    - Anantasana
+    - Marichyasana A
+    - Marichyasana B
+    - Marichyasana C
+    - Marichyasana D
+    - Ardha Bhekasana
+    - Bhekasana
+    - Vamadevasana
+    - Vishnuasana
+    - Sukshma Vyayam
+    - agnistambhasana
+    - Ardha Padma Pasasana
+    - Parsva Halasana
+    - Padmasana
+    - Ardha Uttanasana
+    - Vajrasana
+    - Salabhasana
+    - Utthita Hasta Padangusthasana
+    - Prasarita Padottanasana
+    - Kumbhakasana
+    - Mayurasana
+    - Pincha Mayurasana
+    - Ardha Baddha Padmottanasana
+    - Ashtanga Namaskara
+    - Urdhva Dhanurasana
+    - Pashasana
+    - Supta Virasana
+    - Krounchasana
+    - Chakki Chalanasana
+    - Naukasana
+    - Makarasana
+    - Surya Namaskar
+    - Chandra Namaskar
+    - Yoga Mudrasana
+    - Urdhva Prasrta Eka Padasana
+    - Parsva Dandasana
+    - Bhairavasana
+    - Digasana
+    - Bhujapidasana
+    - Tolasana
+    - Titli Asana
 - Avoid repeating the same set of poses across multiple days.
 - Each title must be **different** from all other titles.
 - Output must start with "[" and end with "]" with no text before or after.

@@ -29,5 +29,10 @@ public class YogaPoseService {
     public void deletePose(Long id) {
         yogaPoseRepository.deleteById(id);
     }
+
+    public List<YogaPose> createMultiplePoses(List<YogaPose> poses) {
+        return yogaPoseRepository.saveAll(poses);
+    }
+
 }
 

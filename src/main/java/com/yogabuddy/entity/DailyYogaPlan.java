@@ -25,6 +25,7 @@ public class DailyYogaPlan {
     private String title;
 
     @Lob
+    @Basic(fetch = FetchType.EAGER)
     @Column(columnDefinition = "TEXT")
     private String posesJson; // store pose IDs and durations in JSON
 }

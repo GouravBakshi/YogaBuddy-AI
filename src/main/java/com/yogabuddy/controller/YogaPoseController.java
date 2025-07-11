@@ -33,6 +33,12 @@ public class YogaPoseController {
         return ResponseEntity.ok(yogaPoseService.createPose(pose));
     }
 
+    @PostMapping("/add-multiple")
+    public ResponseEntity<List<YogaPose>> addMultiplePoses(@RequestBody List<YogaPose> poses) {
+        return ResponseEntity.ok(yogaPoseService.createMultiplePoses(poses));
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePose(@PathVariable Long id) {
         yogaPoseService.deletePose(id);
